@@ -4,17 +4,23 @@
 
 #ifndef TICTACTOE_GAME_H
 #define TICTACTOE_GAME_H
-#include <vector>
+#include <queue>
 #include "Board.h"
 #include "Player.h"
 
 
 class Game {
 
+public:
+    Game(){}
+    Game createGame();
+    void startGame();
+    void addPlayer();
+
 private:
     int num_players;
     Board board;
-    std::vector<Player> players;
+    std::queue<Player> players_turn_queue;
 };
 
 

@@ -3,3 +3,5 @@
 //
 
 #include "Player.h"
+
+Player::Player(string name, char token): name(name), token(token) {}

@@ -8,7 +8,8 @@
 #include <vector>
 
 class Board {
-
+public:
+    Board createBoard(){}
 private:
     int size;
     std::vector<std::vector<int> > state;

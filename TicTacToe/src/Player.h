@@ -10,11 +10,10 @@
 using namespace std;
 
 class Player {
-
-    Player():{}
+public:
+    Player(string name, char token);
 
 private:
-    int id;
     string name;
     char token;
 };
