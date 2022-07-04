@@ -12,7 +12,8 @@ using namespace std;
 class Player {
 public:
     Player(string name, char token);
-
+    string getName(){return name;}
+    char getToken(){return token;}
 private:
     string name;
     char token;
