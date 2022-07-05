@@ -73,17 +73,21 @@ void Game::startGame() {
 
 status Game::checkBoardStatus() {
 
-    bool isThereAWinner = false;
+    bool isThereADraw = true;
     // check row
     for(int i =0;i<board.getSize();i++) {
         bool isCurRowWinning = true;
         char possibleWinner = board.getState()[i][0];
         if(possibleWinner == board.DEFAULT_TOKEN) {
             isCurRowWinning == false;
+            isThereADraw = false;
             break;
         }
 
         for(int j = 1;j < board.getSize();j++) {
+            if(board.getState()[i][j]==board.DEFAULT_TOKEN) {
+                isThereADraw = false;
+            }
             if(board.getState()[i][j]!=possibleWinner) {
                 isCurRowWinning = false;
                 break;
@@ -100,23 +104,55 @@ status Game::checkBoardStatus() {
     for(int i =0;i<board.getSize();i++) {
         bool isCurColWinning = true;
         char possibleWinner = board.getState()[0][i];
-        if(possibleWinner == board.DEFAULT_TOKEN) {
+        if (possibleWinner == board.DEFAULT_TOKEN) {
             isCurColWinning == false;
             break;
         }
 
-        for(int j = 1;j < board.getSize();j++) {
-            if(board.getState()[j][i]!=possibleWinner) {
+        for (int j = 1; j < board.getSize(); j++) {
+            if (board.getState()[j][i] != possibleWinner) {
                 isCurColWinning = false;
                 break;
             }
         }
 
-        if(isCurColWinning) {
+        if (isCurColWinning) {
             cerr << "Player won on Cul" << endl;
             return status::PLAYER_WON;
         }
     }
+    //check diagonal
+    char possibleWinner = board.getState()[0][0];
+    bool isDiagWinner = true;
+    for(int i =1;i<board.getSize();i++) {
+        if(board.getState()[i][i]!=possibleWinner || possibleWinner==board.DEFAULT_TOKEN) {
+            isDiagWinner = false;
+            break;
+        }
+    }
 
+    if(isDiagWinner) {
+        cerr << "Player won on Diag" << endl;
+        return status::PLAYER_WON;
+    }
+
+    possibleWinner = board.getState()[board.getSize()-1][0];
+    isDiagWinner = true;
+    for(int i =2;i<=board.getSize();i++) {
+        if(board.getState()[board.getSize() - i][i-1]!=possibleWinner || possibleWinner==board.DEFAULT_TOKEN) {
+            isDiagWinner = false;
+            break;
+        }
+    }
+
+    if(isDiagWinner) {
+        cerr << "Player won on Diag" << endl;
+        return status::PLAYER_WON;
+    }
+
+    if (isThereADraw) {
+        cerr << "There is a Draw" << endl;
+        return status::DRAW;
+    }
     return status::ONGOING;
 }
